@@ -1,2 +1,0 @@
-# QGraphicsViewDemoTest
-test pro

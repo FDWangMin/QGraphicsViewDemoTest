@@ -13,6 +13,8 @@ class Widget;
 class QGraphicsScene;
 class QGraphicsView;
 class QGraphicsItem;
+class QGraphicsPixmapItem;
+class QGraphicsRectItem;
 
 class Widget : public QWidget
 {
@@ -29,6 +31,10 @@ private:
     QGraphicsScene *m_graphicsScene;
     QGraphicsView *m_graphicsView;
     QList<QGraphicsItem *> m_itemList;
+
+    QGraphicsPixmapItem *m_imageItem;
+    QGraphicsRectItem *m_backgroundItem;
+    QGraphicsRectItem *m_outlineItem;
 
     qreal m_scale;
 };

@@ -14,48 +14,148 @@
    <string>Widget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="2">
-    <widget class="QGraphicsView" name="graphicsView"/>
-   </item>
-   <item row="0" column="1">
-    <widget class="QTreeWidget" name="treeWidget">
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <column>
-      <property name="text">
-       <string>1</string>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>123</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>234</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>345</string>
-       </property>
-      </item>
-     </item>
-    </widget>
-   </item>
    <item row="0" column="0">
-    <widget class="Window_ViewPortWidget" name="widget_" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>200</width>
-       <height>0</height>
-      </size>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pb_clean">
+       <property name="text">
+        <string>Clean Items</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_resert">
+       <property name="text">
+        <string>Reset</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_fit">
+       <property name="text">
+        <string>FitScreen</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_scale">
+       <item>
+        <property name="text">
+         <string>false</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>true</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>50</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_style">
+       <item>
+        <property name="text">
+         <string>NoStyle</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ColorGridStyle</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>BrushGridStyle</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PureColorStyle</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolButton_color">
+       <property name="text">
+        <string>Color</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_set">
+       <property name="text">
+        <string>Clicked To Set</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="Window_ViewPortWidget" name="widget_TestPainter_WindowView" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>0</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeWidget" name="treeWidget">
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <column>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>123</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>234</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>345</string>
+         </property>
+        </item>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="JGraphicsView" name="graphicsView"/>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
@@ -66,6 +166,11 @@
    <extends>QWidget</extends>
    <header location="global">widget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>JGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">jgraphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

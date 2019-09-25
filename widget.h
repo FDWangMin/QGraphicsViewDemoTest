@@ -11,7 +11,7 @@ class Widget;
 }
 
 class QGraphicsScene;
-class QGraphicsView;
+class JGraphicsView;
 class QGraphicsItem;
 class QGraphicsPixmapItem;
 class QGraphicsRectItem;
@@ -26,10 +26,21 @@ public:
 
     bool eventFilter(QObject *watched, QEvent *event);
 
+private slots:
+    void on_pb_clean_clicked();
+
+    void on_pb_set_clicked();
+
+    void on_toolButton_color_clicked();
+
+    void on_pb_resert_clicked();
+
+    void on_pb_fit_clicked();
+
 private:
     Ui::Widget *ui;
     QGraphicsScene *m_graphicsScene;
-    QGraphicsView *m_graphicsView;
+    JGraphicsView *m_graphicsView;
     QList<QGraphicsItem *> m_itemList;
 
     QGraphicsPixmapItem *m_imageItem;
@@ -37,6 +48,7 @@ private:
     QGraphicsRectItem *m_outlineItem;
 
     qreal m_scale;
+    QColor m_color;
 };
 
 class Window_ViewPortWidget : public QWidget

@@ -21,17 +21,22 @@
 
 #include <qmath.h>
 
+#include "jgraphicsscene.h"
+#include "jgraohicsitems.h"
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
-    m_graphicsScene(new QGraphicsScene(this)),
-    m_scale(0.3)
+    m_graphicsScene(new JGraphicsScene(this)),
+    m_scale(0.3),
+    m_color(QColor("#ffcce8cf"))
 {
     ui->setupUi(this);
 
 //    m_graphicsScene->setSelectionArea(0,0, 1920*m_scale*2, 1080*m_scale);
     m_graphicsScene->setSceneRect(0,0, 1920*m_scale*2, 1080*m_scale);
     m_graphicsScene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    m_graphicsScene;
 
     m_graphicsView = ui->graphicsView;
     ui->graphicsView->setScene(m_graphicsScene);
@@ -56,33 +61,32 @@ Widget::Widget(QWidget *parent) :
     m_graphicsView->setBackgroundStyle(JGraphicsView::BrushGridStyle, color);
     m_graphicsView->setBackgroundScale(false);
 
-    auto pixmapItem = new QGraphicsPixmapItem(tilePixmap);
-    pixmapItem->setTransformationMode(Qt::SmoothTransformation);
-    m_imageItem = pixmapItem;
-    if (!m_imageItem) // failed to load
-        return;
-    m_imageItem->setCacheMode(QGraphicsItem::NoCache);
-    m_imageItem->setZValue(0);
-
-    //background item
-    m_backgroundItem = new QGraphicsRectItem(m_imageItem->boundingRect());
-    m_backgroundItem->setBrush(Qt::white);
-    m_backgroundItem->setPen(Qt::NoPen);
-    m_backgroundItem->setVisible(true);
-    m_backgroundItem->setZValue(-1);
-
-    //外边缘虚线
-    m_outlineItem = new QGraphicsRectItem(m_imageItem->boundingRect());
-    QPen outline(Qt::black, 1, Qt::DashLine);
-    outline.setCosmetic(true);
-    m_outlineItem->setPen(outline);
-    m_outlineItem->setBrush(Qt::NoBrush);
-    m_outlineItem->setVisible(true);
-    m_outlineItem->setZValue(1);
-    QGraphicsScene *s = m_graphicsView->scene();
-    s->addItem(m_backgroundItem);
-    s->addItem(m_imageItem);
-    s->addItem(m_outlineItem);
+    //背景块
+//    auto pixmapItem = new QGraphicsPixmapItem(tilePixmap);
+//    pixmapItem->setTransformationMode(Qt::SmoothTransformation);
+//    m_imageItem = pixmapItem;
+//    if (!m_imageItem) // failed to load
+//        return;
+//    m_imageItem->setCacheMode(QGraphicsItem::NoCache);
+//    m_imageItem->setZValue(0);
+//    //background item
+//    m_backgroundItem = new QGraphicsRectItem(m_imageItem->boundingRect());
+//    m_backgroundItem->setBrush(Qt::white);
+//    m_backgroundItem->setPen(Qt::NoPen);
+//    m_backgroundItem->setVisible(true);
+//    m_backgroundItem->setZValue(-1);
+//    //外边缘虚线
+//    m_outlineItem = new QGraphicsRectItem(m_imageItem->boundingRect());
+//    QPen outline(Qt::black, 1, Qt::DashLine);
+//    outline.setCosmetic(true);
+//    m_outlineItem->setPen(outline);
+//    m_outlineItem->setBrush(Qt::NoBrush);
+//    m_outlineItem->setVisible(true);
+//    m_outlineItem->setZValue(1);
+//    QGraphicsScene *s = m_graphicsView->scene();
+//    s->addItem(m_backgroundItem);
+//    s->addItem(m_imageItem);
+//    s->addItem(m_outlineItem);
 
     //矩形
     QGraphicsRectItem *rectItem1 = (new QGraphicsRectItem(0,0, 1920*m_scale, 1080*m_scale));
@@ -97,6 +101,7 @@ Widget::Widget(QWidget *parent) :
     rectItem1->setAcceptedMouseButtons(Qt::AllButtons);
     rectItem1->setAcceptHoverEvents(true);
     rectItem1->setAcceptTouchEvents(true);
+//    rectItem1->setFocus(Qt::MouseFocusReason);
     rectItem1->setFlags(QGraphicsItem::ItemIsMovable|QGraphicsItem::ItemIsSelectable|QGraphicsItem::ItemIsFocusable);
     m_graphicsScene->addItem(rectItem1);
     QGraphicsRectItem *rectItem2 = (new QGraphicsRectItem(1920*m_scale,0, 1920*m_scale, 1080*m_scale));
@@ -104,10 +109,8 @@ Widget::Widget(QWidget *parent) :
     pen2.setWidth(3);
     rectItem2->setPen(pen2);
     rectItem2->setScale(1);
-    rectItem2->setSelected(true);
-    rectItem2->setActive(true);
-    rectItem2->setEnabled(true);
     m_graphicsScene->addItem(rectItem2);
+    m_graphicsScene->setFocusItem(rectItem1);
 
     //椭圆
 //    QGraphicsEllipseItem *ellipseItem = new QGraphicsEllipseItem(0,0, 1920*m_scale, 1080*m_scale);
@@ -144,7 +147,7 @@ Widget::Widget(QWidget *parent) :
     //图片
     QGraphicsPixmapItem *p  = new QGraphicsPixmapItem(QPixmap(":/C:/Users/86176/Desktop/1568944190(1).png"), rectItem1);
     p->setEnabled(true);
-    p->setActive(true);
+//    p->setActive(true);
     p->setScale(0.8);
     p->setPos(0, 50);
     m_graphicsScene->addItem(p);
@@ -162,7 +165,7 @@ Widget::Widget(QWidget *parent) :
 
     QGraphicsTextItem *textItem = new QGraphicsTextItem(QString("QGraphicsTextItem"), rectItem2);
     textItem->setHtml(QString("www.baidu.com"));
-    textItem->setSelected(true);
+//    textItem->setSelected(true);
     textItem->setPos(1920*m_scale*1.5,150);
     m_graphicsScene->addItem(textItem);
     textItem->setFlags(QGraphicsItem::ItemIsMovable|QGraphicsItem::ItemIsSelectable|QGraphicsItem::ItemIsFocusable
@@ -182,21 +185,31 @@ Widget::Widget(QWidget *parent) :
         m_graphicsView->rotate(15);
     });
     QGraphicsProxyWidget *gPWgt = m_graphicsScene->addWidget(pb);
+    gPWgt->setAcceptHoverEvents(true);
+    gPWgt->setAcceptTouchEvents(true);
+    gPWgt->setActive(true);
+    gPWgt->setEnabled(true);
+    gPWgt->setSelected(true);
+    gPWgt->setVisible(true);
+    gPWgt->setAcceptedMouseButtons(Qt::LeftButton);
     gPWgt->setGeometry(QRectF(500,500,300,300));
-    m_graphicsScene->setActiveWindow(gPWgt);
+    m_graphicsScene->addItem(gPWgt);
 
     connect(m_graphicsScene, &QGraphicsScene::focusItemChanged, [this](QGraphicsItem* a,QGraphicsItem* b,Qt::FocusReason r){
         qDebug() << "QGraphicsScene::focusItemChanged:" << a << b << r;
     });
 
-    connect(m_graphicsScene, &QGraphicsScene::changed, [this](/*QList<QRectF> &region*/){
-        qDebug() << "QGraphicsScene::changed:"  /*<<region*/;
-    });
+//    connect(m_graphicsScene, &QGraphicsScene::changed, [this](/*QList<QRectF> &region*/){
+//        qDebug() << "QGraphicsScene::changed:"  /*<<region*/;
+//    });
 
     connect(m_graphicsScene, &QGraphicsScene::selectionChanged, [this](){
         qDebug() << "QGraphicsScene::selectionChanged:" << m_graphicsScene->selectedItems();
     });
 
+    JGraphicsRectItem * j = new JGraphicsRectItem(0,0,100,100);
+    m_graphicsScene->addItem(j);
+    j->splitScreen(JGraphicsRectItem::OneScreen);
 }
 
 Widget::~Widget()
@@ -273,4 +286,12 @@ void Widget::on_pb_resert_clicked()
 void Widget::on_pb_fit_clicked()
 {
     m_graphicsView->fitInView(QRectF(0,0,(1920*2)*m_scale,(1080*2)*m_scale), Qt::KeepAspectRatio);
+}
+
+void Widget::on_pushButton_clicked()
+{
+    if (ui->cb_scale->currentIndex() == 0)
+        m_graphicsView->rotate(-15);
+    else
+        m_graphicsView->rotate(15);
 }

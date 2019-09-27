@@ -10,7 +10,7 @@ namespace Ui {
 class Widget;
 }
 
-class QGraphicsScene;
+class JGraphicsScene;
 class JGraphicsView;
 class QGraphicsItem;
 class QGraphicsPixmapItem;
@@ -37,9 +37,11 @@ private slots:
 
     void on_pb_fit_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::Widget *ui;
-    QGraphicsScene *m_graphicsScene;
+    JGraphicsScene *m_graphicsScene;
     JGraphicsView *m_graphicsView;
     QList<QGraphicsItem *> m_itemList;
 

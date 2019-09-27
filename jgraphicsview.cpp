@@ -45,6 +45,13 @@ void JGraphicsView::setBackgroundStyle(JGraphicsView::BackgroundStyle style, QCo
     {
     case JGraphicsView::NoStyle:
     {
+        QPixmap tilePixmap(m_tileWH, m_tileWH);
+        tilePixmap.fill(Qt::white);
+        QPainter tilePainter(&tilePixmap);
+        tilePainter.setPen(Qt::white);
+        tilePainter.drawRect(0, 0, m_tileWH, m_tileWH);
+        tilePainter.end();
+        setBackgroundBrush(tilePixmap);
         break;
     }
     case JGraphicsView::ColorGridStyle: GridStyle:
@@ -127,4 +134,10 @@ void JGraphicsView::drawBackground(QPainter *painter, const QRectF &rect)
     painter->resetTransform();
     painter->drawTiledPixmap(viewport()->rect(), backgroundBrush().texture());
     painter->restore();
+}
+
+void JGraphicsView::mousePressEvent(QMouseEvent *event)
+{
+    qDebug() << "---JGraphicsView::mousePressEvent---" << event->pos() << event->screenPos() ;
+    QGraphicsView::mousePressEvent(event);
 }

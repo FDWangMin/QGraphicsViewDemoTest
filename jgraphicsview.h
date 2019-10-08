@@ -41,6 +41,11 @@ public:
 //    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 //    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dragLeaveEvent(QDragLeaveEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);
+    void dropEvent(QDropEvent *event);
+
 //    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 //    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 //    void scrollContentsBy(int dx, int dy) Q_DECL_OVERRIDE;

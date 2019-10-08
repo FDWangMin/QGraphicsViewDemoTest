@@ -10,14 +10,16 @@ public:
     JGraphicsScene(const QRectF &sceneRect, QObject *parent = Q_NULLPTR);
     JGraphicsScene(qreal x, qreal y, qreal width, qreal height, QObject *parent = Q_NULLPTR);
 
+    void init();
+
 protected:
     bool event(QEvent *event);
 //    bool eventFilter(QObject *watched, QEvent *event);
 //    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-//    void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
-//    void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
-//    void dragLeaveEvent(QGraphicsSceneDragDropEvent *event);
-//    void dropEvent(QGraphicsSceneDragDropEvent *event);
+    void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
+    void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
+    void dragLeaveEvent(QGraphicsSceneDragDropEvent *event);
+    void dropEvent(QGraphicsSceneDragDropEvent *event);
 //    void focusInEvent(QFocusEvent *event);
 //    void focusOutEvent(QFocusEvent *event);
 //    void helpEvent(QGraphicsSceneHelpEvent *event);

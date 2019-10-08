@@ -13,11 +13,16 @@ JGraphicsScene::JGraphicsScene(QObject *parent):QGraphicsScene(parent)
 JGraphicsScene::JGraphicsScene(const QRectF &sceneRect, QObject *parent):
     QGraphicsScene(sceneRect, parent)
 {
-
+    init();
 }
 
 JGraphicsScene::JGraphicsScene(qreal x, qreal y, qreal width, qreal height, QObject *parent):
     QGraphicsScene(x, y, width, height, parent)
+{
+    init();
+}
+
+void JGraphicsScene::init()
 {
 
 }
@@ -26,6 +31,31 @@ bool JGraphicsScene::event(QEvent *event)
 {
 //    qDebug() << "JGraphicsScene::event(QEvent *event)" << event->type();
     return QGraphicsScene::event(event);
+}
+
+void JGraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
+{
+    event->acceptProposedAction();
+    qDebug() << "JGraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)";
+    QGraphicsScene::dragEnterEvent(event);
+}
+
+void JGraphicsScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
+{
+    qDebug() << "JGraphicsScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event)";
+    QGraphicsScene::dragMoveEvent(event);
+}
+
+void JGraphicsScene::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)
+{
+    qDebug() << "JGraphicsScene::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)";
+    QGraphicsScene::dragLeaveEvent(event);
+}
+
+void JGraphicsScene::dropEvent(QGraphicsSceneDragDropEvent *event)
+{
+    qDebug() << "JGraphicsScene::dropEvent(QGraphicsSceneDragDropEvent *event)";
+    QGraphicsScene::dropEvent(event);
 }
 
 void JGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -38,18 +68,28 @@ void JGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     QGraphicsScene::mousePressEvent(event);
 
-    if (event->button() == Qt::LeftButton && items(event->scenePos()).count() > 0)
-    {
-        QGraphicsItem *selectItem = items(event->scenePos()).first();
-        foreach (QGraphicsItem *item, selectedItems())
-        {
-            if (item == selectItem)
-                continue;
-            item->setSelected(false);
-        }
-        selectItem->setSelected(!selectItem->isSelected());
-//        event->accept();
-    }
+//    if (event->button() == Qt::LeftButton)
+//    {
+//        if(items(event->scenePos()).count() > 0)
+//        {
+//            QGraphicsItem *selectItem = items(event->scenePos()).first();
+//            foreach (QGraphicsItem *item, selectedItems())
+//            {
+//                if (item == selectItem)
+//                    continue;
+//                item->setSelected(false);
+//            }
+//            qDebug() << "selectItem->setSelected(!selectItem->isSelected());" << "!" << selectItem->isSelected();
+//            selectItem->setSelected(!selectItem->isSelected());
+//        }
+//        else
+//        {
+//            foreach (QGraphicsItem *item, items())
+//            {
+//                item->setSelected(false);
+//            }
+//        }
+//    }
 }
 
 void JGraphicsScene::drawBackground(QPainter *painter, const QRectF &rect)

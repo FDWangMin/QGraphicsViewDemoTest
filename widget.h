@@ -12,6 +12,7 @@ class Widget;
 
 class JGraphicsScene;
 class JGraphicsView;
+class JGraphicsRectItem;
 class QGraphicsItem;
 class QGraphicsPixmapItem;
 class QGraphicsRectItem;
@@ -23,8 +24,6 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-
-    bool eventFilter(QObject *watched, QEvent *event);
 
 private slots:
     void on_pb_clean_clicked();
@@ -39,11 +38,21 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_pb_1_clicked();
+
+    void on_pb_4_clicked();
+
+    void on_pb_9_clicked();
+
+    void on_pushButton_6_clicked();
+
 private:
     Ui::Widget *ui;
     JGraphicsScene *m_graphicsScene;
     JGraphicsView *m_graphicsView;
     QList<QGraphicsItem *> m_itemList;
+
+    JGraphicsRectItem * m_j;
 
     QGraphicsPixmapItem *m_imageItem;
     QGraphicsRectItem *m_backgroundItem;

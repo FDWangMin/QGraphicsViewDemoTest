@@ -41,3 +41,4 @@ FORMS += \
 
 RESOURCES += \
     src.qrc
+

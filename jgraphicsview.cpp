@@ -26,8 +26,9 @@ JGraphicsView::~JGraphicsView()
 
 void JGraphicsView::init()
 {
+    setAcceptDrops(true);
     setTransformationAnchor(QGraphicsView::QGraphicsView::AnchorViewCenter);
-    setDragMode(QGraphicsView::RubberBandDrag);
+    setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setFrameShape(QFrame::NoFrame);
     setRenderHint(QPainter::SmoothPixmapTransform);
@@ -110,19 +111,17 @@ void JGraphicsView::wheelEvent(QWheelEvent *event)
     qreal newScale = currentScale * factor;
     qDebug() << "newScale = currentScale * factor =" << currentScale * factor;;
     qreal actualFactor = factor;
-    // cap to 0.001 - 1000
-    if (newScale > 1000)
-        actualFactor = 1000./currentScale;
-    else if (newScale < 0.001)
-        actualFactor = 0.001/currentScale;
+    // cap to 0.1 - 10
+    if (newScale > 10)
+        actualFactor = 10./currentScale;
+    else if (newScale < 0.1)
+        actualFactor = 0.1/currentScale;
     scale(actualFactor, actualFactor);
 //            m_graphicsView->rotate(15);
 //            m_graphicsView->shear(0.01,0.01);
 //            m_graphicsView->translate(100,0);
-    qDebug() << "actualFactor=" << actualFactor << "\n";
+//    qDebug() << "actualFactor=" << actualFactor << "\n";
 //            m_graphicsView->fitInView(QRectF(0,0,(1920*2)*m_scale,(1080*2)*m_scale));
-//    items().at(0)->setScale(actualFactor);
-//    items().at(1)->setScale(actualFactor);
 }
 
 void JGraphicsView::drawBackground(QPainter *painter, const QRectF &rect)
@@ -140,4 +139,30 @@ void JGraphicsView::mousePressEvent(QMouseEvent *event)
 {
     qDebug() << "---JGraphicsView::mousePressEvent---" << event->pos() << event->screenPos() ;
     QGraphicsView::mousePressEvent(event);
+}
+
+void JGraphicsView::dragEnterEvent(QDragEnterEvent *event)
+{
+    qDebug() << "JGraphicsView::dragEnterEvent(QDragEnterEvent *event)";
+    event->acceptProposedAction();
+    QGraphicsView::dragEnterEvent(event);
+}
+
+void JGraphicsView::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    qDebug() << "JGraphicsView::dragLeaveEvent(QDragEnterEvent *event)";
+    QGraphicsView::dragLeaveEvent(event);
+}
+
+void JGraphicsView::dragMoveEvent(QDragMoveEvent *event)
+{
+//    event->acceptProposedAction();
+    qDebug() << "JGraphicsView::dragMoveEvent(QDragEnterEvent *event)";
+    QGraphicsView::dragMoveEvent(event);
+}
+
+void JGraphicsView::dropEvent(QDropEvent *event)
+{
+    qDebug() << "JGraphicsView::dropEvent(QDragEnterEvent *event)";
+    QGraphicsView::dropEvent(event);
 }
